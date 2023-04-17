@@ -5,27 +5,22 @@ data "aws_caller_identity" "current" {}
 
 # allow the specified terraform cloud project to assume the role
 resource "aws_iam_role" "terraform_cloud" {
-  name = "github-actions"
+  name = "terraform-cloud"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
-        "Version" : "2012-10-17",
-        "Statement" : [
-          {
-            "Effect" : "Allow",
-            "Principal" : {
-              "Federated" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/app.terraform.io"
-            },
-            "Action" : "sts:AssumeRoleWithWebIdentity",
-            "Condition" : {
-              "StringEquals" : {
-                "app.terraform.io:sub" : "organization:roaminggator:project:slackgpt:workspace:*:run_phase:*",
-                "app.terraform.io:aud" : "aws.workload.identity"
-              }
-            }
+        "Effect" : "Allow",
+        "Principal" : {
+          "Federated" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/app.terraform.io"
+        },
+        "Action" : "sts:AssumeRoleWithWebIdentity",
+        "Condition" : {
+          "StringEquals" : {
+            "app.terraform.io:sub" : "organization:roaminggator:project:slackgpt:workspace:*:run_phase:*",
+            "app.terraform.io:aud" : "aws.workload.identity"
           }
-        ]
+        }
       }
     ]
   })
