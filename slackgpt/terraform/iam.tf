@@ -49,3 +49,8 @@ resource "aws_iam_role_policy_attachment" "iam-full-access" {
   role       = aws_iam_role.terraform_cloud.name
   policy_arn = "arn:aws:iam::aws:policy/IAMFullAccess"
 }
+
+resource "aws_iam_role_policy_attachment" "apigw-full-access" {
+  role       = aws_iam_role.terraform_cloud.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonAPIGatewayAdministrator"
+}
