@@ -17,8 +17,10 @@ resource "aws_iam_role" "terraform_cloud" {
         "Action" : "sts:AssumeRoleWithWebIdentity",
         "Condition" : {
           "StringEquals" : {
-            "app.terraform.io:sub" : "organization:roaminggator:project:slackgpt:workspace:*:run_phase:*",
             "app.terraform.io:aud" : "aws.workload.identity"
+          },
+          "StringLike" : {
+            "app.terraform.io:sub" : "organization:roaminggator:project:slackgpt:workspace:*:run_phase:*",
           }
         }
       }
