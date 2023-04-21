@@ -35,22 +35,32 @@ resource "aws_iam_role_policy_attachment" "lambda-full-access" {
   policy_arn = "arn:aws:iam::aws:policy/AWSLambda_FullAccess"
 }
 
+# dynamodb holds the chat state
 resource "aws_iam_role_policy_attachment" "dynamodb-full-access" {
   role       = aws_iam_role.terraform_cloud.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
 }
 
+# secrets manager holds the keys, etc
 resource "aws_iam_role_policy_attachment" "secretsmanager-read-write" {
   role       = aws_iam_role.terraform_cloud.name
   policy_arn = "arn:aws:iam::aws:policy/SecretsManagerReadWrite"
 }
 
+# need to be able to set up iam roles
 resource "aws_iam_role_policy_attachment" "iam-full-access" {
   role       = aws_iam_role.terraform_cloud.name
   policy_arn = "arn:aws:iam::aws:policy/IAMFullAccess"
 }
 
+# api gateway is the endpoint that slack sends events to
 resource "aws_iam_role_policy_attachment" "apigw-full-access" {
   role       = aws_iam_role.terraform_cloud.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonAPIGatewayAdministrator"
+}
+
+# sqs is the queue that lambda uses to send jobs to the background
+resource "aws_iam_role_policy_attachment" "sqs-full-access" {
+  role       = aws_iam_role.terraform_cloud.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSQSFullAccess"
 }
