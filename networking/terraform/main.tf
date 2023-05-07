@@ -4,9 +4,15 @@ module "basic" {
   top_cidr        = ["10.0.0.0/8"]
   top_name        = "Internal IP Space"
   ipam_scope_type = "private"
-  ram_share_principals = [
-    data.aws_organizations_organization.org.id
-  ]
+  pool_configurations = {
+    us-east-1 = {
+      cidr   = ["10.1.0.0/16"]
+      locale = "us-east-1"
+      ram_share_principals = [
+        data.aws_organizations_organization.org.id
+      ]
+    }
+  }
 }
 
 data "aws_organizations_organization" "org" {}
