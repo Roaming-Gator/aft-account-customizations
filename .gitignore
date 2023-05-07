@@ -186,6 +186,7 @@ cython_debug/
 ### Terraform ###
 .terraform.lock.hcl
 backend.tf
+providers.tf
 
 # Local .terraform directories
 **/.terraform/*
