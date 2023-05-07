@@ -9,7 +9,7 @@ module "basic" {
       cidr   = ["10.1.0.0/16"]
       locale = "us-east-1"
       ram_share_principals = [
-        data.aws_organizations_organization.org.id
+        data.aws_organizations_organization.org.arn
       ]
     }
   }
